@@ -1,4 +1,7 @@
 ### Node ###
+# Typescript build output
+dist/
+
 # Logs
 logs
 *.log
