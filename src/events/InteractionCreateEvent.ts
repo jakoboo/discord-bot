@@ -4,7 +4,7 @@ import Event from '../models/Event';
 
 class InteractionCreateEvent extends Event {
 	constructor(client: DiscordClient) {
-		super(client, 'interactionCreate', false);
+		super(client, 'interactionCreate');
 	}
 
 	async execute(interaction: Interaction): Promise<void> {

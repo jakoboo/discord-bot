@@ -6,7 +6,7 @@ abstract class Event {
 	readonly name: keyof ClientEvents;
 	readonly once: boolean;
 
-	constructor(client: DiscordClient, name: keyof ClientEvents, once: boolean) {
+	constructor(client: DiscordClient, name: keyof ClientEvents, once = false) {
 		this.client = client;
 		this.name = name;
 		this.once = once;
