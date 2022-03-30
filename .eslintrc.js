@@ -2,8 +2,10 @@
 module.exports = {
 	root: true,
 	parser: '@typescript-eslint/parser',
-	parserOptions: {
-		ecmaVersion: 2022,
+	env: {
+		node: true,
+		es2022: true,
+		'jest/globals': true,
 	},
 	plugins: ['@typescript-eslint', 'jest', 'prettier'],
 	extends: [
@@ -12,9 +14,6 @@ module.exports = {
 		'plugin:jest/recommended',
 		'prettier',
 	],
-	env: {
-		'jest/globals': true,
-	},
 	rules: {
 		'arrow-spacing': ['warn', { before: true, after: true }],
 		'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
