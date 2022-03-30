@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { config as dotenvConfig } from 'dotenv';
+import EnvError from '../../src/errors/EnvError';
 import EnvLoader from '../../src/loaders/EnvLoader';
 import DiscordClient from '../../src/models/DiscordClient';
 
@@ -63,6 +64,7 @@ describe('EnvLoader', () => {
 
 	describe('.load', () => {
 		test('should call .validate with process.env', () => {
+			validateSpy.mockImplementationOnce(jest.fn());
 			EnvLoader.load();
 			expect(validateSpy).toHaveBeenCalledTimes(1);
 			expect(validateSpy).toHaveBeenCalledWith(process.env);
@@ -71,7 +73,23 @@ describe('EnvLoader', () => {
 
 	describe('.validate', () => {
 		test('should throw EnvError if no env variables are set', () => {
-			expect(validateSpy).toThrow(Error);
+			expect(validateSpy).toThrow(EnvError);
+			expect(() => {
+				const envVariables = {
+					DISCORD_TOKEN: '',
+					DISCORD_CLIENT_ID: 'discord_client_id',
+				};
+
+				(EnvLoader as any).validate(envVariables);
+			}).toThrow(EnvError);
+			expect(() => {
+				const envVariables = {
+					DISCORD_TOKEN: 'discord_token',
+					DISCORD_CLIENT_ID: '',
+				};
+
+				(EnvLoader as any).validate(envVariables);
+			}).toThrow(EnvError);
 		});
 
 		test('should return when all required env variables are set', () => {

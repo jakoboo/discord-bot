@@ -7,7 +7,8 @@ export default class EnvLoader {
 	}
 
 	private static validate(env: NodeJS.ProcessEnv): void {
-		if (env.DISCORD_TOKEN === '') throw new EnvError('discord token missing');
-		if (env.DISCORD_CLIENT_ID === '') throw new EnvError('discord client id missing');
+		if (!env) throw new EnvError('missing env parameter');
+		if (!env.DISCORD_TOKEN) throw new EnvError('discord token missing');
+		if (!env.DISCORD_CLIENT_ID) throw new EnvError('discord client id missing');
 	}
 }
