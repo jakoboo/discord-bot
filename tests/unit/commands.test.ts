@@ -1,27 +1,35 @@
 import { CommandInteraction } from 'discord.js';
+import PingCommand from '../../src/commands/PingCommand';
 import DiscordClient from '../../src/models/DiscordClient';
-import PingCommand from '../../src/commands/ping';
 
-jest.mock('discord.js');
+jest.mock('discord.js', () => {
+	return {
+		Client: jest.fn(),
+		CommandInteraction: jest.fn().mockImplementation(() => ({
+			reply: jest.fn(),
+		})),
+	};
+});
 jest.mock('../../src/models/DiscordClient');
 
-const MockDiscordClient = DiscordClient as unknown as jest.Mock<DiscordClient>;
-const MockCommandInteraction = CommandInteraction as jest.Mock<CommandInteraction>;
+describe('Commands test-suite', () => {
+	const discordClient = new (DiscordClient as unknown as jest.Mock<DiscordClient>)();
+	const commandInteraction = new (CommandInteraction as jest.Mock<CommandInteraction>);
 
-describe('Commands', () => {
-	beforeEach(() => {
-		MockDiscordClient.mockClear();
-		MockCommandInteraction.mockClear();
-	});
+	describe('PingCommand', () => {
+		const pingCommand = new PingCommand(discordClient);
+		pingCommand.execute(commandInteraction);
 
-	describe('ping command', () => {
-		it('should call CommandInteraction::reply with ephemeral "Pong!"', async () => {
-			const payload = { content: 'Pong!', ephemeral: true };
-			const discordClient = new MockDiscordClient();
-			const commandInteraction = new MockCommandInteraction;
-			await new PingCommand(discordClient).execute(commandInteraction);
-			expect(commandInteraction.reply).toHaveBeenCalledWith(payload);
-			expect(commandInteraction.reply).toHaveBeenCalledTimes(1);
+		describe('.execute', () => {
+			test('defines a function', () => {
+				expect(typeof pingCommand.execute).toBe('function');
+			});
+
+			test('should call CommandInteraction.reply with ephemeral "Pong!"', async () => {
+				const replyPayload = { content: 'Pong!', ephemeral: true };
+				expect(commandInteraction.reply).toHaveBeenCalledWith(replyPayload);
+				expect(commandInteraction.reply).toHaveBeenCalledTimes(1);
+			});
 		});
 	});
 });

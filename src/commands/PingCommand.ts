@@ -11,7 +11,7 @@ class PingCommand extends Command {
 	}
 
 	async execute(interaction: CommandInteraction): Promise<void> {
-		await interaction.reply({ content: 'Pong!', ephemeral: true });
+		return interaction.reply({ content: 'Pong!', ephemeral: true });
 	}
 }
 
