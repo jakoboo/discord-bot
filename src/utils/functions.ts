@@ -1,11 +1,11 @@
 const isConstructorProxyHandler = {
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	construct() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	construct(): any {
 		return Object.prototype;
 	},
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 export function isConstructor(func: any, _class: any): boolean {
 	try {
 		new new Proxy(func, isConstructorProxyHandler)();
