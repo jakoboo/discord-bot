@@ -5,12 +5,16 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 2022,
 	},
-	plugins: ['@typescript-eslint'],
+	plugins: ['@typescript-eslint', 'jest', 'prettier'],
 	extends: [
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:jest/recommended',
 		'prettier',
 	],
+	env: {
+		'jest/globals': true,
+	},
 	rules: {
 		'arrow-spacing': ['warn', { before: true, after: true }],
 		'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
