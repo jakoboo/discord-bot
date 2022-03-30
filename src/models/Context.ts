@@ -115,7 +115,7 @@ export default class Context {
 			await this.discordRest.put(Routes.applicationCommands(this.client.config.clientId), { body:  commandDefinitions });
 		}
 		catch (error) {
-			throw new ContextError(`couldn't register command definitions`, error);
+			throw new ContextError(`couldn't register command definitions`, { cause: error });
 		}
 	}
 
