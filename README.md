@@ -17,7 +17,7 @@ npm run start
 
 ## 📝 TODO
 
-- [] Write missing tests to achieve 100% test coverage
-- [] Add essential commands
-- [] Add music playing capability
-- [] Add server moderation commands and utilities
+- [ ] Write missing tests to achieve 100% test coverage
+- [ ] Add essential commands
+- [ ] Add music playing capability
+- [ ] Add server moderation commands and utilities
